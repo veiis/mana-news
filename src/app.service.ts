@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Sequelize } from 'sequelize-typescript';
 
 @Injectable()
 export class AppService {
-  constructor() { }
+  constructor(private sequelize: Sequelize) { }
   getHello(): string {
     return 'INDEX'
   }
