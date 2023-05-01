@@ -6,8 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { User } from './users/models/user.model';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -28,7 +28,8 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
       limit: 10
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService,

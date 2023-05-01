@@ -14,7 +14,7 @@ export class UsersService {
 
     async findUserByMobile(data: GetUserByMobileDto): Promise<User | null> {
         const { mobile } = data
-        const user: User = await this.userModel.findOne({ where: { mobile }, raw: true })
+        const user: User = await this.userModel.findOne({ where: { mobile }, raw: true, attributes: { include: ['password'] } })
         return user
     }
 

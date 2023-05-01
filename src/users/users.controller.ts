@@ -13,14 +13,7 @@ export class UsersController {
     @Get('me')
     async getMyProfile(@Req() req: Request) {
         const { id }: GetMyProfileDto = req.user
-
-        console.log(id)
         return await this.userService.getMyProfile({ id })
-    }
-
-    @Get('profile')
-    async getProfile() {
-        return []
     }
 }
 
