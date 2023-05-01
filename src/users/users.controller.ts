@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus, UseGuards, Req } from "@nestjs/common";
 import { UsersService } from "./users.service";
-import { AuthGuard } from "src/auth/auth.guard";
+import { AuthGuard } from "src/guards/auth.guard";
 import { Request } from 'express';
 import { GetMyProfileDto } from "./dto/getMyProfile.dto";
 
