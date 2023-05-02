@@ -2,7 +2,7 @@ import { Injectable, ConflictException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./models/user.model"
 import { GetMyProfileDto } from "./dto/getMyProfile.dto";
-import { RegisterDto } from "src/auth/dto/register.dto";
+import { RegisterDto } from "src/modules/auth/dto/register.dto";
 import { GetUserByMobileDto } from "./dto/getUserByMobile.dto";
 
 @Injectable()

@@ -3,7 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { News } from './models/news.model';
 import { NewsController } from './news.controller';
 import { NewsService } from './news.service';
-import { Category } from 'src/categories/models/category.model';
+import { Category } from 'src/modules/categories/models/category.model';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({

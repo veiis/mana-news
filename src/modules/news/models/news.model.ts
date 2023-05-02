@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { Model, Column, Table, Length, BelongsToMany, ForeignKey, HasMany } from "sequelize-typescript";
 import { NewsCategory } from 'src/associations/NewsCategory.model';
-import { Category } from 'src/categories/models/category.model';
+import { Category } from 'src/modules/categories/models/category.model';
 
 @Table({ tableName: 'news', paranoid: true, timestamps: true })
 export class News extends Model<News> {

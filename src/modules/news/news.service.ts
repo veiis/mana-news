@@ -2,7 +2,7 @@ import { Injectable, ConflictException, NotFoundException } from "@nestjs/common
 import { InjectModel } from "@nestjs/sequelize";
 import sequelize from "sequelize";
 import { News } from "./models/news.model"
-import { Category } from "src/categories/models/category.model";
+import { Category } from "src/modules/categories/models/category.model";
 import { CreateNewsDto } from "./dto/create-news.dto";
 import { dateQueryBuilder } from "src/tools/dateQueryBuilder";
 import { Op, cast, col, where } from "sequelize";

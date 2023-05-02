@@ -1,6 +1,6 @@
 import { Column, ForeignKey, Model, Table } from "sequelize-typescript";
-import { Category } from "src/categories/models/category.model";
-import { News } from "src/news/models/news.model";
+import { Category } from "src/modules/categories/models/category.model";
+import { News } from "src/modules/news/models/news.model";
 
 @Table({ tableName: 'newsCategories' })
 export class NewsCategory extends Model {
