@@ -26,7 +26,7 @@ export class CategoriesService {
             throw new ConflictException(`${title} already exist.`)
         }
 
-        const category = await new Category({ title }).save()
+        const category = await this.categoryModel.build({ title }).save()
 
         if (!category) {
             throw new ConflictException(`There was an error while creating resource`)

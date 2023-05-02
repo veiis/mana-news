@@ -13,7 +13,7 @@ import { UsersModule } from '../users/users.module';
         }),
         UsersModule
     ],
-    providers: [AuthService, UsersModule],
+    providers: [AuthService],
     controllers: [AuthController]
 })
 

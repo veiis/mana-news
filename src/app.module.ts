@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CategoriesModule } from './categories/categories.module';
+import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { CategoriesModule } from './categories/categories.module';
       database: process.env.PG_DATABASE,
       autoLoadModels: true,
       synchronize: true,
-      logging: false
+      logging: false,
+
     }),
     ThrottlerModule.forRoot({
       ttl: 60,
@@ -29,7 +31,8 @@ import { CategoriesModule } from './categories/categories.module';
     }),
     UsersModule,
     AuthModule,
-    CategoriesModule
+    CategoriesModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [AppService,

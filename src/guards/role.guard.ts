@@ -13,12 +13,13 @@ export class RolesGuard implements CanActivate {
             return true
         }
 
-
         const req = context.switchToHttp().getRequest()
 
         const { id } = req.user
 
         const user = await User.findByPk(id, { attributes: ['role'], raw: true })
+
+        if (!user) return false
 
         const doHaveRole = roles.includes(user.role)
 

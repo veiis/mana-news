@@ -38,3 +38,5 @@ lerna-debug.log*
 .dev.env
 .prod.env
 .local.env
+
+files
