@@ -1,8 +1,8 @@
 {
   "name": "mana-news",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "sample project for mana",
+  "author": "Iman Veisi",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
