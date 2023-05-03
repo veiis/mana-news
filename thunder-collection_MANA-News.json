@@ -1,0 +1,917 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "MANA-News",
+    "dateExported": "2023-05-03T16:43:13.082Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "c979e314-63b1-43f1-bdac-2dd988728b86",
+            "name": "Auth",
+            "containerId": "",
+            "created": "2023-04-30T15:55:47.329Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Categories",
+            "containerId": "",
+            "created": "2023-05-01T12:22:39.626Z",
+            "sortNum": 30000,
+            "settings": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": "{{access_token}}"
+                }
+            }
+        },
+        {
+            "_id": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Tags",
+            "containerId": "",
+            "created": "2023-05-03T01:01:31.259Z",
+            "sortNum": 35000,
+            "settings": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": "{{access_token}}"
+                }
+            }
+        },
+        {
+            "_id": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "News",
+            "containerId": "",
+            "created": "2023-05-02T09:35:26.151Z",
+            "sortNum": 40000,
+            "settings": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": "{{access_token}}"
+                }
+            }
+        },
+        {
+            "_id": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Videos",
+            "containerId": "",
+            "created": "2023-05-03T10:48:58.855Z",
+            "sortNum": 50000,
+            "settings": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": "{{access_token}}"
+                }
+            }
+        },
+        {
+            "_id": "00229901-add6-410c-bba3-520adb030192",
+            "name": "Homepage",
+            "containerId": "",
+            "created": "2023-05-03T13:02:55.386Z",
+            "sortNum": 60000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "c07d50f2-3208-42f1-8348-5a521476477f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "c979e314-63b1-43f1-bdac-2dd988728b86",
+            "name": "Register",
+            "url": "/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-04-30T15:56:01.571Z",
+            "modified": "2023-04-30T18:09:47.668Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"firstName\": \"Iman\",\n  \"lastName\": \"Veisi\",\n  \"mobile\": \"+989197228172\",\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.accessToken",
+                    "action": "setto",
+                    "value": "{{access_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "e925183b-da20-426f-b18c-007bad712666",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "c979e314-63b1-43f1-bdac-2dd988728b86",
+            "name": "Login",
+            "url": "/auth/login",
+            "method": "POST",
+            "sortNum": 15000,
+            "created": "2023-04-30T18:01:52.825Z",
+            "modified": "2023-04-30T18:08:59.707Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"mobile\": \"+989197228172\",\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.accessToken",
+                    "action": "setto",
+                    "value": "{{access_token}}"
+                }
+            ]
+        },
+        {
+            "_id": "51956497-3867-4d9f-8b54-d659fc70a527",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "c979e314-63b1-43f1-bdac-2dd988728b86",
+            "name": "Get My Profile",
+            "url": "/users/me",
+            "method": "GET",
+            "sortNum": 25000,
+            "created": "2023-04-30T17:56:15.828Z",
+            "modified": "2023-05-02T14:57:17.851Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{access_token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "66df3fe0-fee6-4300-a090-06e90c71f9e8",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Create Category",
+            "url": "/categories",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-05-01T12:22:52.009Z",
+            "modified": "2023-05-03T11:51:08.643Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"funny\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "afeccf8e-7c00-40c2-b73c-f6b5e8782ae2",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Create Tag",
+            "url": "/tags",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-05-03T01:01:31.259Z",
+            "modified": "2023-05-03T11:21:25.752Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"title\": \"shit\",\n  \"color\": \"#333\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c34d1ff0-85d5-4ab8-b03e-b9f8f5fbef9d",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Update Category",
+            "url": "/categories",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-01T13:34:09.520Z",
+            "modified": "2023-05-03T11:20:22.408Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 1,\n  \"title\": \"funny\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "6d71be77-b64c-4e84-800d-d4dbc2807f4f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Update Tag",
+            "url": "/tags",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2023-05-03T01:01:31.260Z",
+            "modified": "2023-05-03T01:07:45.971Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 1,\n  \"title\": \"trend\",\n  \"color\": \"#e2e\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "9ba8bf1a-3197-467d-90d3-5ceaf4693e1c",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Delete Category",
+            "url": "/categories/1",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-01T14:00:01.416Z",
+            "modified": "2023-05-01T14:39:06.332Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d7505e62-9396-4343-ace1-6c6e3a67608f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Delete Tag",
+            "url": "/tags/2",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2023-05-03T01:01:31.261Z",
+            "modified": "2023-05-03T01:07:57.170Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "98e2dad6-ce32-4a71-b027-9093cb4129aa",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Get One Category",
+            "url": "/categories/3",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-05-01T14:42:10.079Z",
+            "modified": "2023-05-01T15:46:41.481Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3d451bd3-ef0f-49a6-915e-1bf432712692",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Get One Tag",
+            "url": "/tags/1",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-05-03T01:01:31.262Z",
+            "modified": "2023-05-03T01:12:46.766Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b3ddf984-a53a-4834-ba0d-60baf92516e4",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "22dec253-d39b-4cfc-95ef-4418adc9e29f",
+            "name": "Get All Category",
+            "url": "/categories?page=1&limit=10",
+            "method": "GET",
+            "sortNum": 75000,
+            "created": "2023-05-01T14:42:30.167Z",
+            "modified": "2023-05-01T15:42:46.044Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "10",
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "title",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "order",
+                    "value": "asc",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "s",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "t",
+                    "value": "2023-05-01T23:59:59.999Z",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "title",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "3a42f45c-4570-442f-8170-51101d535ba3",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "ab2df50a-b9c3-4f50-b460-454f48b4135e",
+            "name": "Get All Tags",
+            "url": "/tags?page=1&limit=10&color=3",
+            "method": "GET",
+            "sortNum": 75000,
+            "created": "2023-05-03T01:01:31.263Z",
+            "modified": "2023-05-03T01:14:49.121Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "10",
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "title",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "order",
+                    "value": "asc",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "s",
+                    "value": "1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "t",
+                    "value": "2023-05-01T23:59:59.999Z",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "title",
+                    "value": "fun",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "color",
+                    "value": "3",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "b31a8d1d-c4e9-4aa0-bfb6-59749caccb5f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Create News",
+            "url": "/news",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2023-05-02T09:36:39.141Z",
+            "modified": "2023-05-03T13:05:32.695Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "there nothing left"
+                    },
+                    {
+                        "name": "description",
+                        "value": "here we go again"
+                    },
+                    {
+                        "name": "categories",
+                        "value": "[1]"
+                    },
+                    {
+                        "name": "tags",
+                        "value": "[1]",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "isTrend",
+                        "value": "true"
+                    },
+                    {
+                        "name": "isSlideshow",
+                        "value": "false"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Iman\\Desktop\\2lFhd.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "06c87b6f-5b9b-483c-b94c-41d5cd61791f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Create Video",
+            "url": "/videos",
+            "method": "POST",
+            "sortNum": 85000,
+            "created": "2023-05-03T10:48:58.855Z",
+            "modified": "2023-05-03T11:49:22.142Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "title",
+                        "value": "som_e lon__g / t-itle shit t__o # test --- slug_creation"
+                    },
+                    {
+                        "name": "categories",
+                        "value": "[1]"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "video",
+                        "value": "e:\\meme and shit\\catfun-20200604-0001.mp4"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "9caa303f-a36a-4138-a15c-33b4cbd78e09",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Update News",
+            "url": "/news",
+            "method": "PUT",
+            "sortNum": 85625,
+            "created": "2023-05-02T17:12:30.352Z",
+            "modified": "2023-05-03T13:05:53.696Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "2"
+                    },
+                    {
+                        "name": "title",
+                        "value": "Breaking News"
+                    },
+                    {
+                        "name": "description",
+                        "value": "We are officialy fucked up"
+                    },
+                    {
+                        "name": "categories",
+                        "value": "[1, 2]"
+                    },
+                    {
+                        "name": "tags",
+                        "value": "[1,  3]",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "isSlideshow",
+                        "value": "true"
+                    },
+                    {
+                        "name": "isTrend",
+                        "value": "false"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\Iman\\Desktop\\2lFhd.jpg"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "84e9b3c4-9da4-4884-aeda-fb4ff8110559",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Update Video",
+            "url": "/videos",
+            "method": "PUT",
+            "sortNum": 85625,
+            "created": "2023-05-03T10:48:58.856Z",
+            "modified": "2023-05-03T11:51:17.798Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "1"
+                    },
+                    {
+                        "name": "title",
+                        "value": "Breaking Video 2"
+                    },
+                    {
+                        "name": "description",
+                        "value": "We are officialy fucked up"
+                    },
+                    {
+                        "name": "categories",
+                        "value": "[1, 2]"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "video",
+                        "value": "e:\\meme and shit\\cats_presidency-20200611-0001.mp4"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "a852a509-0b12-418e-b152-a96ca5b5b7cc",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Delete News",
+            "url": "/news/1",
+            "method": "DELETE",
+            "sortNum": 87500,
+            "created": "2023-05-02T14:41:10.504Z",
+            "modified": "2023-05-02T17:37:46.409Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "dbcb4d92-7fd4-4e21-9f37-eefe86453bbb",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Delete Video",
+            "url": "/news/1",
+            "method": "DELETE",
+            "sortNum": 87500,
+            "created": "2023-05-03T10:48:58.857Z",
+            "modified": "2023-05-03T10:48:58.855Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "51fe4c19-1971-4e5e-9c04-5a78efceb29a",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Get One News",
+            "url": "/news/1",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-05-02T14:40:48.201Z",
+            "modified": "2023-05-02T14:40:57.394Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "599746ae-9577-4e0b-a3b0-e87e0cae6e9f",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Get One Video",
+            "url": "/news/1",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2023-05-03T10:48:58.858Z",
+            "modified": "2023-05-03T10:48:58.855Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "77ab16e6-46d5-4def-8076-4518c76a9c39",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Get One Video By Slug",
+            "url": "/videos/s/breaking-video-2",
+            "method": "GET",
+            "sortNum": 92500,
+            "created": "2023-05-03T11:51:28.510Z",
+            "modified": "2023-05-03T11:54:07.612Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "481e5172-3dff-4342-9bf5-835b5111c500",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Get All News",
+            "url": "/news?page=1&limit=10",
+            "method": "GET",
+            "sortNum": 95000,
+            "created": "2023-05-02T11:52:44.066Z",
+            "modified": "2023-05-03T13:03:52.633Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "10",
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "title",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "order",
+                    "value": "asc",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "s",
+                    "value": "some",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "t",
+                    "value": "2023-05-01T23:59:59.999Z",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "title",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "categories",
+                    "value": "[1, 2]",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "categoryTitle",
+                    "value": "e",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "tags",
+                    "value": "[3]",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "tagTitle",
+                    "value": "test",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "cccc6a8c-a850-4ca4-b74d-7a342f82d126",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "13da18b7-9ece-4af3-9730-1f4807bb4fe4",
+            "name": "Get All Videos",
+            "url": "/videos?page=1&limit=10",
+            "method": "GET",
+            "sortNum": 95000,
+            "created": "2023-05-03T10:48:58.859Z",
+            "modified": "2023-05-03T11:00:55.848Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "10",
+                    "isPath": false
+                },
+                {
+                    "name": "sort",
+                    "value": "title",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "order",
+                    "value": "asc",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "s",
+                    "value": "some",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "t",
+                    "value": "2023-05-01T23:59:59.999Z",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "id",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "title",
+                    "value": "2",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "categories",
+                    "value": "[1, 2]",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "categoryTitle",
+                    "value": "e",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "tags",
+                    "value": "[3]",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "tagTitle",
+                    "value": "test",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "f49a7be8-198f-4903-b700-e85f479e5c46",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Like News",
+            "url": "/news/1/like",
+            "method": "PATCH",
+            "sortNum": 105000,
+            "created": "2023-05-03T00:31:34.891Z",
+            "modified": "2023-05-03T00:33:52.573Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bbce843c-52ef-4fa7-8811-f6c6bdef9fdc",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "151545d6-1dbe-46ea-975f-ce5d48b1958b",
+            "name": "Unlike News",
+            "url": "/news/1/unlike",
+            "method": "PATCH",
+            "sortNum": 115000,
+            "created": "2023-05-03T00:34:01.194Z",
+            "modified": "2023-05-03T00:34:22.312Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ec7c6cc5-6cd2-4427-871f-69a63756808b",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "00229901-add6-410c-bba3-520adb030192",
+            "name": "Get Slideshow News",
+            "url": "/home/slideshow",
+            "method": "GET",
+            "sortNum": 125000,
+            "created": "2023-05-03T13:03:10.268Z",
+            "modified": "2023-05-03T13:03:39.959Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "8cff5cbb-346e-4554-81fd-192371c455bd",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "00229901-add6-410c-bba3-520adb030192",
+            "name": "Get Trend News",
+            "url": "/home/trends",
+            "method": "GET",
+            "sortNum": 135000,
+            "created": "2023-05-03T13:09:00.127Z",
+            "modified": "2023-05-03T13:09:20.676Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "ffea1218-791d-497f-af59-8f56469f02a2",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "00229901-add6-410c-bba3-520adb030192",
+            "name": "Get Popular News",
+            "url": "/home/popular",
+            "method": "GET",
+            "sortNum": 145000,
+            "created": "2023-05-03T13:12:21.006Z",
+            "modified": "2023-05-03T13:13:01.763Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "46e2d8de-63b7-4b19-9c9c-376688c97407",
+            "colId": "1e7480d8-9fcd-4d02-b832-c5af5fa9f83b",
+            "containerId": "00229901-add6-410c-bba3-520adb030192",
+            "name": "Get Most Viewed News",
+            "url": "/home/most-viewed",
+            "method": "GET",
+            "sortNum": 155000,
+            "created": "2023-05-03T13:12:33.342Z",
+            "modified": "2023-05-03T13:12:58.409Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "http://localhost:{{PORT}}"
+        },
+        "envId": "0ab76e9a-e094-4e77-b56b-d796127e1089"
+    }
+}
