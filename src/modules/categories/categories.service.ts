@@ -10,15 +10,15 @@ import { GetAllCategoryDto } from "./dto/get-all-category.dto";
 import sequelize from "sequelize";
 import { dateQueryBuilder } from "src/tools/dateQueryBuilder";
 import { News } from "../news/models/news.model";
+import { Video } from "../videos/models/video.model";
 
 
 @Injectable()
 export class CategoriesService {
     constructor(
-        @InjectModel(Category)
-        private categoryModel: typeof Category,
-        @InjectModel(News)
-        private newsModel: typeof News
+        @InjectModel(Category) private categoryModel: typeof Category,
+        @InjectModel(News) private newsModel: typeof News,
+        @InjectModel(Video) private videoModel: typeof Video
     ) { }
 
     async createCategory(data: CreateCategoryDto): Promise<Category> {
@@ -41,6 +41,8 @@ export class CategoriesService {
     async updateCategory(data: UpdateCategoryDto): Promise<Category> {
         const { id, title } = data
 
+        const update = {}
+
         const category = await this.categoryModel.findByPk(id)
 
         if (!category) {
@@ -53,7 +55,28 @@ export class CategoriesService {
             throw new ConflictException(`There is already another category with this title ${title}`)
         }
 
-        await category.update({ title })
+        const news = await this.newsModel.findOne({
+            include: { model: Category, where: { id }, through: { attributes: [] } },
+            raw: true
+        })
+
+        if (news) {
+            throw new ConflictException(`There is already some news with this category ${id}`)
+        }
+
+
+        const video = await this.videoModel.findOne({
+            include: { model: Category, where: { id }, through: { attributes: [] } },
+            raw: true
+        })
+
+        if (video) {
+            throw new ConflictException(`There is already some videos with this category ${id}`)
+        }
+
+        if (title) update['title'] = title
+
+        await category.update(update)
 
         return category
     }
@@ -74,6 +97,16 @@ export class CategoriesService {
 
         if (news) {
             throw new ConflictException(`There is already some news with this category ${id}`)
+        }
+
+
+        const video = await this.videoModel.findOne({
+            include: { model: Category, where: { id }, through: { attributes: [] } },
+            raw: true
+        })
+
+        if (video) {
+            throw new ConflictException(`There is already some videos with this category ${id}`)
         }
 
         // what happen to news related to this category?
@@ -145,9 +178,9 @@ export class CategoriesService {
             offset
         })
 
-        if (categories.rows.length === 0) {
-            throw new NotFoundException()
-        }
+        // if (categories.rows.length === 0) {
+        //     throw new NotFoundException()
+        // }
 
         return { items: categories.rows, count: categories.count }
     }

@@ -30,8 +30,8 @@ export class CreateNewsDto {
     @ArrayMinSize(1)
     categories: number[]
 
+    @IsOptional()
     @Transform(({ value }) => transformToArray(value))
     @IsArray()
-    @ArrayMinSize(1)
     tags: number[]
 }

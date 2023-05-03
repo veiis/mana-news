@@ -33,6 +33,9 @@ export class News extends Model<News> {
     @Column({ defaultValue: false })
     isTrend: boolean
 
+    @Column({ allowNull: false })
+    slug: string
+
     @BelongsToMany(() => Category, () => NewsCategory)
     categories: Category[]
 

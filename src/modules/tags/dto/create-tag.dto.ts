@@ -4,7 +4,7 @@ export class CreateTagDto {
     @IsNotEmpty()
     @IsString()
     @MinLength(3)
-    @MaxLength(12)
+    @MaxLength(30)
     title: string
 
     @IsNotEmpty()

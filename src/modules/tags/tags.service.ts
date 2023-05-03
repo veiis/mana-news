@@ -95,9 +95,10 @@ export class TagsService {
         if (s) {
             query[Op.or] = [
                 {
-                    id: sequelize.where(cast(col("id"), "varchar"), { [Op.iLike]: `%${data.s}%` }),
+                    id: sequelize.where(cast(col("id"), "varchar"), { [Op.iLike]: `%${s}%` }),
                 },
-                { title: { [Op.iLike]: `%${data.s}%` } },
+                { title: { [Op.iLike]: `%${s}%` } },
+                { color: { [Op.iLike]: `%${s}%` } },
             ];
         }
 
@@ -116,9 +117,9 @@ export class TagsService {
             offset
         })
 
-        if (tags.rows.length === 0) {
-            throw new NotFoundException()
-        }
+        // if (tags.rows.length === 0) {
+        //     throw new NotFoundException()
+        // }
 
         return { items: tags.rows, count: tags.count }
     }

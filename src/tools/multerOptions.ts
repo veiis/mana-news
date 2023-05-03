@@ -27,7 +27,7 @@ const createStorage = (dir: string): StorageEngine => {
 }
 
 const fileFilter = (req: Express.Request, file: any, cb) => {
-    if (!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+    if (!file.mimetype.match(/\/(jpg|jpeg|png|gif|mp4)$/)) {
         return cb(new HttpException(`Unsupported file type ${extname(file.originalname)}`, HttpStatus.BAD_REQUEST), false);
     }
     cb(null, true);

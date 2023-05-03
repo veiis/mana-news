@@ -1,0 +1,9 @@
+import { Transform } from "class-transformer";
+import { IsNotEmpty, IsNumber } from "class-validator";
+
+export class DeleteVideoDto {
+    @IsNotEmpty()
+    @Transform(({ value }) => parseInt(value))
+    @IsNumber()
+    id: string
+}

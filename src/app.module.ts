@@ -10,6 +10,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { NewsModule } from './modules/news/news.module';
 import { TagsModule } from './modules/tags/tags.module';
+import { VideosModule } from './modules/videos/videos.module';
 
 @Module({
   imports: [
@@ -23,8 +24,7 @@ import { TagsModule } from './modules/tags/tags.module';
       database: process.env.PG_DATABASE,
       autoLoadModels: true,
       synchronize: true,
-      logging: false,
-
+      logging: true,
     }),
     ThrottlerModule.forRoot({
       ttl: 60,
@@ -34,7 +34,8 @@ import { TagsModule } from './modules/tags/tags.module';
     AuthModule,
     CategoriesModule,
     NewsModule,
-    TagsModule
+    TagsModule,
+    VideosModule
   ],
   controllers: [AppController],
   providers: [AppService,

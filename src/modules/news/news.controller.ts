@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus, UseGuards, Req, Post, Body, Query, Put, Param, Delete, UseInterceptors, UploadedFile, Patch } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, UseGuards, Post, Body, Query, Put, Param, Delete, UseInterceptors, UploadedFile, Patch } from "@nestjs/common";
 import { NewsService } from "./news.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { Roles } from "src/decorators/roles.decorator";
@@ -13,6 +13,7 @@ import { createStorage, fileFilter, limits } from "src/tools/multerOptions";
 import { fileNameExtractor } from "src/tools/fileNameExtractor";
 import { LikeOneNewsDto } from "./dto/like-one-news.dto";
 import { UnlikeOneNewsDto } from "./dto/unlike-one-news.dto";
+import { GetNewsBySlugDto } from "./dto/get-news-by-slug.dto";
 
 @Controller('news')
 export class NewsController {
@@ -33,8 +34,9 @@ export class NewsController {
     @UseGuards(AuthGuard, RolesGuard)
     @UseInterceptors(FileInterceptor('image', { storage: createStorage('news'), fileFilter, limits: limits }))
     @Put()
-    async updateNews(@Body() body: UpdateNewsDto) {
-        return await this.newsService.updateNews(body)
+    async updateNews(@Body() body: UpdateNewsDto, @UploadedFile() file: Express.Multer.File) {
+        const fileName = fileNameExtractor(file.path)
+        return await this.newsService.updateNews(body, fileName)
     }
 
     @HttpCode(HttpStatus.OK)
@@ -69,5 +71,11 @@ export class NewsController {
     @Patch('/:id/unlike')
     async unlikeOneNews(@Param() params: UnlikeOneNewsDto) {
         return await this.newsService.unlikeOneNews(params)
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @Get('/s/:slug')
+    async getNewsBySlug(@Param() params: GetNewsBySlugDto) {
+        return await this.newsService.getNewsBySlug(params)
     }
 }

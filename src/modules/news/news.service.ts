@@ -12,16 +12,15 @@ import { UpdateNewsDto } from "./dto/update-news.dto";
 import { DeleteNewsDto } from "./dto/delete-news.dto";
 import { GetOneNewsDto } from "./dto/get-one-news.dto";
 import { LikeOneNewsDto } from "./dto/like-one-news.dto";
+import { GetNewsBySlugDto } from "./dto/get-news-by-slug.dto";
+import { createSlug } from "src/tools/createSlug";
 
 @Injectable()
 export class NewsService {
     constructor(
-        @InjectModel(News)
-        private newsModel: typeof News,
-        @InjectModel(Category)
-        private categoryModel: typeof Category,
-        @InjectModel(Tag)
-        private tagModel: typeof Tag,
+        @InjectModel(News) private newsModel: typeof News,
+        @InjectModel(Category) private categoryModel: typeof Category,
+        @InjectModel(Tag) private tagModel: typeof Tag,
     ) { }
 
     async createNews(data: CreateNewsDto, fileName: string): Promise<News> {
@@ -47,22 +46,31 @@ export class NewsService {
             }
         }
 
-        const item = await this.newsModel.create({ title, description, cover: fileName, isSlideshow, isTrend })
+        const slug = createSlug(title)
+        const duplicateSlug = await this.newsModel.findOne({ where: { slug }, raw: true })
+
+        if (duplicateSlug) {
+            throw new ConflictException(`another news with ${slug} slug already exist.`)
+        }
+
+
+        const item = await this.newsModel.create({ title, description, cover: fileName, isSlideshow, isTrend, slug: createSlug(title) })
 
         if (!item) {
             throw new ConflictException(`There was an error while creating resource`);
         }
 
-        if (categories.length > 0) await item.$add('categories', categories)
-        if (tags.length > 0) await item.$add('tags', tags)
+        if (categories && categories.length > 0) await item.$add('categories', categories)
+        if (tags && tags.length > 0) await item.$add('tags', tags)
 
         return item;
     }
 
 
-    async updateNews(data: UpdateNewsDto): Promise<News> {
+    async updateNews(data: UpdateNewsDto, fileName: string): Promise<News> {
         const { id, title, categories, tags, isSlideshow, isTrend } = data
 
+        const update = {}
         const news = await this.newsModel.findByPk(id)
 
         if (!news) {
@@ -84,15 +92,28 @@ export class NewsService {
             }
         }
 
+        if (title) {
+            update['title'] = title
+            const slug = createSlug(title)
+            const duplicateSlug = await this.newsModel.findOne({ where: { slug }, raw: true })
+            if (duplicateSlug) {
+                throw new ConflictException(`another video with ${slug} slug already exist.`)
+            }
+            update['slug'] = slug
+        }
+        if (typeof isSlideshow === "boolean") update['isSlideshow'] = isSlideshow
+        if (typeof isTrend === "boolean") update['isTrend'] = isTrend
+        if (fileName) update['cover'] = fileName
+
         const duplicateNews = await this.newsModel.findOne({ where: { id: { [Op.ne]: id }, title } })
 
         if (duplicateNews) {
             throw new ConflictException(`There is already another news with this title ${title}`)
         }
 
-        await news.update({ title, isSlideshow, isTrend })
-        await news.$set('categories', categories)
-        await news.$set('tags', tags)
+        await news.update(update)
+        if (categories && categories.length > 0) await news.$set('categories', categories)
+        if (tags && tags.length > 0) await news.$set('tags', tags)
 
         return news
     }
@@ -183,9 +204,9 @@ export class NewsService {
             ]
         })
 
-        if (news.rows.length === 0) {
-            throw new NotFoundException()
-        }
+        // if (news.rows.length === 0) {
+        //     throw new NotFoundException()
+        // }
 
         return { items: news.rows, count: news.count };
     }
@@ -213,6 +234,26 @@ export class NewsService {
         }
 
         if (news.likes > 0) await news.decrement('likes', { by: 1 });
+        return news
+    }
+
+    async getNewsBySlug(data: GetNewsBySlugDto): Promise<News> {
+        const { slug } = data
+
+        const news = await this.newsModel.findOne({
+            where: { slug },
+            include: [
+                { model: Category, through: { attributes: [] } },
+                { model: Tag, through: { attributes: [] } }
+            ]
+        })
+
+        if (!news) {
+            throw new NotFoundException(`There is no news with slug ${slug}`)
+        }
+
+        await news.increment('views', { by: 1 })
+
         return news
     }
 }
