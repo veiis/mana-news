@@ -14,6 +14,8 @@
 | PG_PORT | Postgres Port | 5432 |
 
 *** Make sure to create a database in postgres, called whatever you set in env file**
+> Base url for files is `{HOST}:{PORT}/files/{FILE_URL}`
+> Example `http://localhost:3002/files/news/image-news-1683072647974.jpg`
 ###Running the application
 Start Dev
 `npm run start:dev`
