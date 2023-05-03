@@ -18,7 +18,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "sequelize:dev": "cross-env NODE_ENV=dev sequelize-cli db:migrate && cross-env NODE_ENV=dev sequelize-cli db:seed:all",
+    "sequelize:local": "cross-env NODE_ENV=local sequelize-cli db:migrate && cross-env NODE_ENV=local sequelize-cli db:seed:all",
+    "sequelize:prod": "cross-env NODE_ENV=prod sequelize-cli db:migrate && cross-env NODE_ENV=prod sequelize-cli db:seed:all"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -36,9 +39,11 @@
     "cross-env": "^7.0.3",
     "helmet": "^6.1.5",
     "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "sequelize": "^6.31.0",
+    "sequelize": "^6.31.1",
+    "sequelize-cli": "^6.6.0",
     "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {
