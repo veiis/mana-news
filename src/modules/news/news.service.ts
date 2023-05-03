@@ -111,7 +111,7 @@ export class NewsService {
         return news
     }
 
-    async getAllNews(data: GetAllNewsDto): Promise<News[]> {
+    async getAllNews(data: GetAllNewsDto): Promise<{ items: News[], count: number }> {
         const { page, limit, order, sort, s, t, id, title } = data
         const offset = (page - 1) * limit
 
@@ -150,7 +150,7 @@ export class NewsService {
             throw new NotFoundException()
         }
 
-        return news.rows;
+        return { items: news.rows, count: news.count };
     }
 
     async likeOneNews(data: LikeOneNewsDto): Promise<News> {

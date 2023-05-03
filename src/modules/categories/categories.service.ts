@@ -99,7 +99,7 @@ export class CategoriesService {
         return category
     }
 
-    async getAllCategories(data: GetAllCategoryDto): Promise<Category[]> {
+    async getAllCategories(data: GetAllCategoryDto): Promise<{ items: Category[], count: number }> {
         const { page, limit, order, sort, s, t, id, title } = data
         const offset = (page - 1) * limit
 
@@ -137,6 +137,6 @@ export class CategoriesService {
             throw new NotFoundException()
         }
 
-        return categories.rows
+        return { items: categories.rows, count: categories.count }
     }
 }
