@@ -11,6 +11,8 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { NewsModule } from './modules/news/news.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { VideosModule } from './modules/videos/videos.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -25,6 +27,11 @@ import { VideosModule } from './modules/videos/videos.module';
       autoLoadModels: true,
       synchronize: true,
       logging: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '/files'),
+      serveRoot: "/files/",
+      serveStaticOptions: { index: false }
     }),
     ThrottlerModule.forRoot({
       ttl: 60,
