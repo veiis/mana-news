@@ -10,6 +10,7 @@ import { GetAllNewsDto } from "./dto/get-all-news.dto";
 import { UpdateNewsDto } from "./dto/update-news.dto";
 import { DeleteNewsDto } from "./dto/delete-news.dto";
 import { GetOneNewsDto } from "./dto/get-one-news.dto";
+import { LikeOneNewsDto } from "./dto/like-one-news.dto";
 
 @Injectable()
 export class NewsService {
@@ -21,7 +22,7 @@ export class NewsService {
     ) { }
 
     async createNews(data: CreateNewsDto, fileName: string): Promise<News> {
-        const { title, description, categories } = data
+        const { title, description, categories, isSlideshow, isTrend } = data
         const duplicateItem = await this.newsModel.findOne({ where: { title }, raw: true })
 
         if (duplicateItem) {
@@ -36,7 +37,7 @@ export class NewsService {
             }
         }
 
-        const item = await this.newsModel.create({ title, description, cover: fileName })
+        const item = await this.newsModel.create({ title, description, cover: fileName, isSlideshow, isTrend })
 
         if (!item) {
             throw new ConflictException(`There was an error while creating resource`);
@@ -49,7 +50,7 @@ export class NewsService {
 
 
     async updateNews(data: UpdateNewsDto): Promise<News> {
-        const { id, title, categories } = data
+        const { id, title, categories, isSlideshow, isTrend } = data
 
         const news = await this.newsModel.findByPk(id)
 
@@ -71,7 +72,8 @@ export class NewsService {
             throw new ConflictException(`There is already another news with this title ${title}`)
         }
 
-        await news.update({ title })
+        console.log({ title, isSlideshow, isTrend })
+        await news.update({ title, isSlideshow, isTrend })
         await news.$set('categories', categories)
 
         return news
@@ -103,6 +105,8 @@ export class NewsService {
         if (!news) {
             throw new NotFoundException(`There is no news with id ${id}`)
         }
+
+        await news.increment('views', { by: 1 })
 
         return news
     }
@@ -147,5 +151,31 @@ export class NewsService {
         }
 
         return news.rows;
+    }
+
+    async likeOneNews(data: LikeOneNewsDto): Promise<News> {
+        const { id } = data
+
+        const news = await this.newsModel.findByPk(id)
+
+        if (!news) {
+            throw new NotFoundException(`There is no news with id ${id}`)
+        }
+
+        await news.increment('likes', { by: 1 })
+        return news
+    }
+
+    async unlikeOneNews(data: LikeOneNewsDto): Promise<News> {
+        const { id } = data
+
+        const news = await this.newsModel.findByPk(id)
+
+        if (!news) {
+            throw new NotFoundException(`There is no news with id ${id}`)
+        }
+
+        if (news.likes > 0) await news.decrement('likes', { by: 1 });
+        return news
     }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus, UseGuards, Req, Post, Body, Query, Put, Param, Delete, UseInterceptors, UploadedFile } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, UseGuards, Req, Post, Body, Query, Put, Param, Delete, UseInterceptors, UploadedFile, Patch } from "@nestjs/common";
 import { NewsService } from "./news.service";
 import { AuthGuard } from "src/guards/auth.guard";
 import { Roles } from "src/decorators/roles.decorator";
@@ -11,6 +11,8 @@ import { GetOneNewsDto } from "./dto/get-one-news.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { createStorage, fileFilter, limits } from "src/tools/multerOptions";
 import { fileNameExtractor } from "src/tools/fileNameExtractor";
+import { LikeOneNewsDto } from "./dto/like-one-news.dto";
+import { UnlikeOneNewsDto } from "./dto/unlike-one-news.dto";
 
 @Controller('news')
 export class NewsController {
@@ -50,10 +52,22 @@ export class NewsController {
     }
 
     @HttpCode(HttpStatus.CREATED)
-    @Roles('admin')
-    @UseGuards(AuthGuard, RolesGuard)
     @Get()
     async getNews(@Query() queries: GetAllNewsDto) {
         return await this.newsService.getAllNews(queries)
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(AuthGuard)
+    @Patch('/:id/like')
+    async likeOneNews(@Param() params: LikeOneNewsDto) {
+        return await this.newsService.likeOneNews(params)
+    }
+
+    @HttpCode(HttpStatus.OK)
+    @UseGuards(AuthGuard)
+    @Patch('/:id/unlike')
+    async unlikeOneNews(@Param() params: UnlikeOneNewsDto) {
+        return await this.newsService.unlikeOneNews(params)
     }
 }

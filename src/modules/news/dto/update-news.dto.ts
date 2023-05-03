@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsNotEmpty, IsString, MinLength, MaxLength, ArrayMinSize, IsArray, IsNumber } from "class-validator";
+import { IsNotEmpty, IsString, MinLength, MaxLength, ArrayMinSize, IsArray, IsNumber, IsOptional, IsBoolean, } from "class-validator";
 import { transformToArray } from "src/tools/transformToArray";
 
 export class UpdateNewsDto {
@@ -19,6 +19,16 @@ export class UpdateNewsDto {
     @MinLength(6)
     @MaxLength(1500)
     description: string
+
+    @IsOptional()
+    @IsBoolean()
+    @Transform(({ value }) => value === 'true' || value === true || value === 1 || value === '1')
+    isSlideshow: boolean
+
+    @IsOptional()
+    @IsBoolean()
+    @Transform(({ value }) => value === 'true' || value === true || value === 1 || value === '1')
+    isTrend: boolean
 
     @Transform(({ value }) => transformToArray(value))
     @IsArray()

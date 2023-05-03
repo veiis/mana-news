@@ -28,6 +28,9 @@ export class News extends Model<News> {
     @Column({ defaultValue: false })
     isSlideshow: boolean
 
+    @Column({ defaultValue: false })
+    isTrend: boolean
+
     @BelongsToMany(() => Category, () => NewsCategory)
     categories: Category[]
 }

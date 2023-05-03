@@ -7,7 +7,7 @@ import * as compression from 'compression';
 async function bootstrap() {
   const PORT = process.env.PORT || 3000
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.enableCors(/*{origin: "any url"}*/)
   app.use(helmet())
   app.use(compression())
