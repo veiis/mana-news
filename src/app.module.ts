@@ -9,6 +9,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { NewsModule } from './modules/news/news.module';
+import { TagsModule } from './modules/tags/tags.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { NewsModule } from './modules/news/news.module';
     AuthModule,
     CategoriesModule,
     NewsModule,
+    TagsModule
   ],
   controllers: [AppController],
   providers: [AppService,

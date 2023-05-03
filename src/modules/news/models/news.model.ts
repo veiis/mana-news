@@ -1,7 +1,9 @@
 import { DataTypes } from 'sequelize';
 import { Model, Column, Table, Length, BelongsToMany, ForeignKey, HasMany } from "sequelize-typescript";
 import { NewsCategory } from 'src/associations/NewsCategory.model';
+import { NewsTag } from 'src/associations/NewsTag.model';
 import { Category } from 'src/modules/categories/models/category.model';
+import { Tag } from 'src/modules/tags/models/tag.model';
 
 @Table({ tableName: 'news', paranoid: true, timestamps: true })
 export class News extends Model<News> {
@@ -9,7 +11,7 @@ export class News extends Model<News> {
     id: number
 
     @Length({ min: 6, max: 255 })
-    @Column({ allowNull: false, })
+    @Column({ allowNull: false })
     title: string
 
     @Length({ min: 6, max: 1500 })
@@ -33,4 +35,7 @@ export class News extends Model<News> {
 
     @BelongsToMany(() => Category, () => NewsCategory)
     categories: Category[]
+
+    @BelongsToMany(() => Tag, () => NewsTag)
+    tags: Tag[]
 }

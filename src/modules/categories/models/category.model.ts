@@ -8,7 +8,7 @@ export class Category extends Model<Category> {
     @Column({ autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER })
     id: number;
 
-    @Column({ unique: true })
+    @Column({ allowNull: false })
     // alternativly we can user @Unique decorator imported from sequelize-typescript package
     title: string
 
