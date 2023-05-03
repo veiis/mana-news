@@ -34,4 +34,9 @@ export class UpdateNewsDto {
     @IsArray()
     @ArrayMinSize(1)
     categories: number[]
+
+    @Transform(({ value }) => transformToArray(value))
+    @IsArray()
+    @ArrayMinSize(1)
+    tags: number[]
 }

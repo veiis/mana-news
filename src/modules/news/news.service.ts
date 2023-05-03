@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/sequelize";
 import sequelize from "sequelize";
 import { News } from "./models/news.model"
 import { Category } from "src/modules/categories/models/category.model";
+import { Tag } from "../tags/models/tag.model";
 import { CreateNewsDto } from "./dto/create-news.dto";
 import { dateQueryBuilder } from "src/tools/dateQueryBuilder";
 import { Op, cast, col, where } from "sequelize";
@@ -19,10 +20,12 @@ export class NewsService {
         private newsModel: typeof News,
         @InjectModel(Category)
         private categoryModel: typeof Category,
+        @InjectModel(Tag)
+        private tagModel: typeof Tag,
     ) { }
 
     async createNews(data: CreateNewsDto, fileName: string): Promise<News> {
-        const { title, description, categories, isSlideshow, isTrend } = data
+        const { title, description, categories, tags, isSlideshow, isTrend } = data
         const duplicateItem = await this.newsModel.findOne({ where: { title }, raw: true })
 
         if (duplicateItem) {
@@ -37,20 +40,28 @@ export class NewsService {
             }
         }
 
+        for (let i = 0; i < tags.length; i++) {
+            const currentTag = await this.tagModel.findByPk(tags[i])
+            if (!currentTag) {
+                throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+            }
+        }
+
         const item = await this.newsModel.create({ title, description, cover: fileName, isSlideshow, isTrend })
 
         if (!item) {
             throw new ConflictException(`There was an error while creating resource`);
         }
 
-        await item.$add('categories', categories)
+        if (categories.length > 0) await item.$add('categories', categories)
+        if (tags.length > 0) await item.$add('tags', tags)
 
         return item;
     }
 
 
     async updateNews(data: UpdateNewsDto): Promise<News> {
-        const { id, title, categories, isSlideshow, isTrend } = data
+        const { id, title, categories, tags, isSlideshow, isTrend } = data
 
         const news = await this.newsModel.findByPk(id)
 
@@ -66,15 +77,22 @@ export class NewsService {
             }
         }
 
+        for (let i = 0; i < tags.length; i++) {
+            const currentTag = await this.tagModel.findByPk(tags[i])
+            if (!currentTag) {
+                throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+            }
+        }
+
         const duplicateNews = await this.newsModel.findOne({ where: { id: { [Op.ne]: id }, title } })
 
         if (duplicateNews) {
             throw new ConflictException(`There is already another news with this title ${title}`)
         }
 
-        console.log({ title, isSlideshow, isTrend })
         await news.update({ title, isSlideshow, isTrend })
         await news.$set('categories', categories)
+        await news.$set('tags', tags)
 
         return news
     }
@@ -89,6 +107,7 @@ export class NewsService {
         }
 
         await news.$set('categories', [])
+        await news.$set('tags', [])
         await news.destroy()
 
         // delete related files or images
@@ -100,7 +119,12 @@ export class NewsService {
     async getOneNews(data: GetOneNewsDto): Promise<News> {
         const { id } = data
 
-        const news = await this.newsModel.findByPk(id, { include: { model: Category, through: { attributes: [] } } })
+        const news = await this.newsModel.findByPk(id, {
+            include: [
+                { model: Category, through: { attributes: [] } },
+                { model: Tag, through: { attributes: [] } }
+            ]
+        })
 
         if (!news) {
             throw new NotFoundException(`There is no news with id ${id}`)
@@ -112,7 +136,8 @@ export class NewsService {
     }
 
     async getAllNews(data: GetAllNewsDto): Promise<{ items: News[], count: number }> {
-        const { page, limit, order, sort, s, t, id, title } = data
+        const { page, limit, order, sort, s, t, id, title, categories, categoryTitle, tags, tagTitle } = data
+
         const offset = (page - 1) * limit
 
         const query = {}
@@ -125,9 +150,11 @@ export class NewsService {
         if (s) {
             query[Op.or] = [
                 {
-                    id: sequelize.where(cast(col("id"), "varchar"), { [Op.iLike]: `%${data.s}%` }),
+                    id: sequelize.where(cast(col("News.id"), "varchar"), { [Op.iLike]: `%${s}%` }),
                 },
-                { title: { [Op.iLike]: `%${data.s}%` } },
+                { title: { [Op.iLike]: `%${s}%` } },
+                { '$categories.title$': { [Op.iLike]: `%${s}%` } },
+                { '$tags.title$': { [Op.iLike]: `%${s}%` } }
             ];
         }
 
@@ -138,12 +165,22 @@ export class NewsService {
         }
         if (title) query['title'] = { [Op.iLike]: `%${title}%` };
 
+        if (categories && categories.length) query['$categories.id$'] = { [Op.in]: categories }
+        if (tags && tags.length) query['$tags.id$'] = { [Op.in]: tags }
+
+        if (categoryTitle) query['$categories.title$'] = { [Op.iLike]: `%${categoryTitle}%` }
+        if (tagTitle) query['$categories.title$'] = { [Op.iLike]: `%${tagTitle}%` }
+
         const news = await this.newsModel.findAndCountAll({
             where: query,
             order: [[sort, order]],
             limit,
             offset,
-            include: { model: Category, through: { attributes: [] } }
+            subQuery: false,
+            include: [
+                { model: Category, through: { attributes: [] } },
+                { model: Tag, through: { attributes: [] } }
+            ]
         })
 
         if (news.rows.length === 0) {

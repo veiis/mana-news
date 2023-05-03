@@ -47,7 +47,6 @@ export class CategoriesController {
     @HttpCode(HttpStatus.OK)
     @Get()
     async getAllCategories(@Query() queries: GetAllCategoryDto) {
-        console.log(queries)
         return await this.categoryService.getAllCategories(queries)
     }
 }

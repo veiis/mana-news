@@ -9,13 +9,16 @@ import { GetOneCategoryDto } from "./dto/get-one-category.dto";
 import { GetAllCategoryDto } from "./dto/get-all-category.dto";
 import sequelize from "sequelize";
 import { dateQueryBuilder } from "src/tools/dateQueryBuilder";
+import { News } from "../news/models/news.model";
 
 
 @Injectable()
 export class CategoriesService {
     constructor(
         @InjectModel(Category)
-        private categoryModel: typeof Category
+        private categoryModel: typeof Category,
+        @InjectModel(News)
+        private newsModel: typeof News
     ) { }
 
     async createCategory(data: CreateCategoryDto): Promise<Category> {
@@ -62,6 +65,15 @@ export class CategoriesService {
 
         if (!category) {
             throw new NotFoundException(`There is no category with id ${id}`)
+        }
+
+        const news = await this.newsModel.findOne({
+            include: { model: Category, where: { id }, through: { attributes: [] } },
+            raw: true
+        })
+
+        if (news) {
+            throw new ConflictException(`There is already some news with this category ${id}`)
         }
 
         // what happen to news related to this category?

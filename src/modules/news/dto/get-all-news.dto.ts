@@ -1,5 +1,6 @@
-import { IsNumber, IsEnum, IsOptional, IsString, IsDate } from "class-validator";
+import { IsNumber, IsEnum, IsOptional, IsString, IsDate, IsArray, ArrayMinSize } from "class-validator";
 import { Transform } from "class-transformer";
+import { transformToArray } from "src/tools/transformToArray";
 
 export class GetAllNewsDto {
     @IsOptional()
@@ -37,4 +38,22 @@ export class GetAllNewsDto {
     @IsOptional()
     @IsString()
     title: string
+
+    @IsOptional()
+    @Transform(({ value }) => transformToArray(value))
+    @IsArray()
+    categories: number[]
+
+    @IsOptional()
+    @IsString()
+    categoryTitle: string
+
+    @IsOptional()
+    @Transform(({ value }) => transformToArray(value))
+    @IsArray()
+    tags: number[]
+
+    @IsOptional()
+    @IsString()
+    tagTitle: string
 }

@@ -47,7 +47,6 @@ export class TagsController {
     @HttpCode(HttpStatus.OK)
     @Get()
     async getAllTags(@Query() queries: GetAllTagsDto) {
-        console.log(queries)
         return await this.tagService.getAllTags(queries)
     }
 }
