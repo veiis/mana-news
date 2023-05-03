@@ -39,10 +39,12 @@ export class NewsService {
             }
         }
 
-        for (let i = 0; i < tags.length; i++) {
-            const currentTag = await this.tagModel.findByPk(tags[i])
-            if (!currentTag) {
-                throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+        if (tags) {
+            for (let i = 0; i < tags.length; i++) {
+                const currentTag = await this.tagModel.findByPk(tags[i])
+                if (!currentTag) {
+                    throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+                }
             }
         }
 
@@ -85,10 +87,12 @@ export class NewsService {
             }
         }
 
-        for (let i = 0; i < tags.length; i++) {
-            const currentTag = await this.tagModel.findByPk(tags[i])
-            if (!currentTag) {
-                throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+        if (tags) {
+            for (let i = 0; i < tags.length; i++) {
+                const currentTag = await this.tagModel.findByPk(tags[i])
+                if (!currentTag) {
+                    throw new NotFoundException(`Tag with id ${tags[i]} not found`)
+                }
             }
         }
 

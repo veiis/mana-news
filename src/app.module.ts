@@ -13,6 +13,7 @@ import { TagsModule } from './modules/tags/tags.module';
 import { VideosModule } from './modules/videos/videos.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { HomeModule } from './modules/home/home.module';
 
 @Module({
   imports: [
@@ -42,7 +43,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     CategoriesModule,
     NewsModule,
     TagsModule,
-    VideosModule
+    VideosModule,
+    HomeModule
   ],
   controllers: [AppController],
   providers: [AppService,
